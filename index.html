@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz Bíblico - Efésios</title>
+
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <div class="container">
+        <div class="card">
+
+            <h1>📖 Quiz Bíblico - Efésios</h1>
+
+            <!-- TELA INICIAL -->
+            <div id="startArea">
+
+                <h2>Bem-vindo!</h2>
+
+                <p class="subtitle">
+                    Escolha um capítulo e teste seus conhecimentos.
+                </p>
+
+                <div class="form-group">
+                    <label for="playerName">Seu nome</label>
+
+                    <input
+                        type="text"
+                        id="playerName"
+                        placeholder="Digite seu nome"
+                        maxlength="50"
+                        autocomplete="name"
+                    >
+                </div>
+
+                <div class="form-group">
+                    <label for="chapterSelect">Capítulo</label>
+
+                    <select id="chapterSelect">
+                        <option value="">Selecione um capítulo</option>
+                        <option value="1">Efésios 1</option>
+                        <option value="2">Efésios 2</option>
+                        <option value="3">Efésios 3</option>
+                        <option value="4">Efésios 4</option>
+                        <option value="5">Efésios 5</option>
+                        <option value="6">Efésios 6</option>
+                    </select>
+                </div>
+
+                <button class="btn" id="startBtn">
+                    Iniciar Quiz
+                </button>
+
+            </div>
+
+            <!-- QUIZ -->
+            <div id="quizArea" style="display:none;">
+
+                <div class="quiz-header">
+                    <span id="playerDisplay"></span>
+                    <span id="chapterDisplay"></span>
+                </div>
+
+                <div class="progress-container">
+                    <div class="progress-bar" id="progressBar"></div>
+                </div>
+
+                <div id="questionContainer" class="fade">
+
+                    <div
+                        class="question-number"
+                        id="questionNumber">
+                    </div>
+
+                    <div
+                        class="question"
+                        id="questionText">
+                    </div>
+
+                    <div
+                        class="answers"
+                        id="answers">
+                    </div>
+
+                    <div
+                        class="feedback"
+                        id="feedback">
+                    </div>
+
+                    <div class="controls">
+                        <button
+                            class="btn"
+                            id="nextBtn"
+                            disabled>
+                            Próxima Pergunta
+                        </button>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- RESULTADO -->
+            <div
+                class="result"
+                id="resultArea"
+                style="display:none;">
+
+                <h2>🎉 Quiz Concluído!</h2>
+
+                <div id="resultPlayer"></div>
+
+                <div
+                    class="score"
+                    id="finalScore">
+                </div>
+
+                <div
+                    class="percentage"
+                    id="finalPercentage">
+                </div>
+
+                <div
+                    class="message"
+                    id="finalMessage">
+                </div>
+
+                <button
+                    class="btn"
+                    onclick="restartQuiz()">
+                    Fazer Outro Quiz
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+
+</body>
+</html>
