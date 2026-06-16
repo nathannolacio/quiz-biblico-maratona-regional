@@ -17,9 +17,11 @@ export async function verifyOtp(email: string, code: string) {
     body: JSON.stringify({ email, code }),
   });
 
+  const data = await res.json();
+
   if (!res.ok) {
-    throw new Error("Código inválido");
+    throw new Error(data.error || "Código inválido");
   }
 
-  return res.json(); // usuário logado
+  return data; // { success, user }
 }

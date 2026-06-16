@@ -58,30 +58,28 @@ export default function LoginPage() {
   }
 
   async function handleVerifyOtp() {
-    if (finalCode.length < 6) {
-      showToast("Digite o código completo", "error");
-      return;
-    }
+  if (finalCode.length < 6) {
+    showToast("Digite o código completo", "error");
+    return;
+  }
 
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const user = await verifyOtp(email, finalCode);
+  try {
+    await verifyOtp(email, finalCode);
 
-      showToast("Login realizado com sucesso!", "success");
+    showToast("Login realizado com sucesso!", "success");
 
-      console.log("USER LOGADO:", user);
+    router.push("/chapters");
+  } catch (err: any) {
+    showToast(err.message || "Código inválido", "error");
 
-      router.push("/quiz?chapter=1");
-    } catch (err) {
-      showToast("Código inválido", "error");
-
-      setCode(Array(6).fill(""));
-      inputsRef.current[0]?.focus();
-    }
-
+    setCode(Array(6).fill(""));
+    inputsRef.current[0]?.focus();
+  } finally {
     setLoading(false);
   }
+}
 
   return (
     <main className="w-full h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 flex items-center justify-center p-6">
