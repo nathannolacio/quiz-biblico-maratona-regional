@@ -22,7 +22,7 @@ export function middleware(req: NextRequest) {
   }
 
   if (token && isLoginPage) {
-    return NextResponse.redirect(new URL("/quiz?chapter=1", req.url));
+    return NextResponse.redirect(new URL("/chapters", req.url));
   }
 
   return NextResponse.next();

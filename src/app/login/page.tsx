@@ -71,8 +71,11 @@ export default function LoginPage() {
     showToast("Login realizado com sucesso!", "success");
 
     router.push("/chapters");
-  } catch (err: any) {
-    showToast(err.message || "Código inválido", "error");
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : "Código inválido";
+
+
+    showToast(message, "error");
 
     setCode(Array(6).fill(""));
     inputsRef.current[0]?.focus();

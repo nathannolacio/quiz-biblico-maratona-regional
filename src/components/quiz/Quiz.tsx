@@ -5,9 +5,7 @@ import Button from "../ui/Button";
 import { getMe } from "@/services/user.client";
 import { ephesiansChapter1 } from "@/data/ephesians-chapter-1";
 import { useRouter } from "next/navigation";
-
-const questions = ephesiansChapter1;
-
+import { saveQuizResult } from "@/services/quiz.client";
 
 export default function Quiz() {
     const [current, setCurrent] = useState(0);
@@ -19,7 +17,7 @@ export default function Quiz() {
     const router = useRouter();
 
     const chapter = "1";
-
+    const questions = ephesiansChapter1;
     const question = questions[current];
 
     useEffect(() => {
@@ -54,13 +52,24 @@ export default function Quiz() {
     const next = current + 1;
 
     if (next >= questions.length) {
-        router.push(`/result?score=${score}&total=${questions.length}&name=${playerName}`);
+      saveQuizResult({
+        chapter,
+        score,
+        total: questions.length
+      })
+      .then(() => {
+        router.push("/result")
+      })
+      .catch(() => {
+        router.push("/result")
+      })
+    
         return;
     }
 
-    setCurrent(next);
-    setSelected(null);
-    setAnswered(false);
+      setCurrent(next);
+      setSelected(null);
+      setAnswered(false);''
     }
 
   return (

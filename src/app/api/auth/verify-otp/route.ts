@@ -2,7 +2,6 @@ import { supabase } from "@/lib/supabase";
 import { findValidOtp } from "@/services/otp.server";
 import { createUser, findUserByEmail } from "@/services/user.server";
 import { createToken } from "@/lib/auth";
-import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function POST(req: Request) {

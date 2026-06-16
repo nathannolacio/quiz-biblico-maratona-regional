@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   const expiresAt = new Date();
   expiresAt.setMinutes(expiresAt.getMinutes() + 10);
 
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from("email_otps")
     .insert({
       id: crypto.randomUUID(),
