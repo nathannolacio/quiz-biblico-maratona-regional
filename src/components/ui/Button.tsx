@@ -1,19 +1,21 @@
 type ButtonProps = {
-    children: React.ReactNode;
-    variant?: "primary" | "secondary";
-    href?: string;
-    onClick?: () => void;
-    className?: string;
+  children: React.ReactNode;
+  variant?: "primary" | "secondary";
+  href?: string;
+  onClick?: () => void;
+  className?: string;
+  disabled?: boolean;
 };
 
 export default function Button({
-    children,
-    variant = "primary",
-    href,
-    onClick,
-    className = "",
+  children,
+  variant = "primary",
+  href,
+  onClick,
+  className = "",
+  disabled = false,
 }: ButtonProps) {
-    const base =
+  const base =
     "py-3 px-6 rounded-xl font-semibold transition-all text-center w-full sm:w-auto";
 
   const styles = {
@@ -23,7 +25,14 @@ export default function Button({
       "bg-gray-200 text-gray-800 hover:bg-gray-300",
   };
 
-  const finalClass = `${base} ${styles[variant]} ${className}`;
+  const disabledStyle = "opacity-50 cursor-not-allowed pointer-events-none";
+
+  const finalClass = `
+    ${base}
+    ${styles[variant]}
+    ${disabled ? disabledStyle : ""}
+    ${className}
+  `;
 
   if (href) {
     return (
@@ -34,7 +43,7 @@ export default function Button({
   }
 
   return (
-    <button onClick={onClick} className={finalClass}>
+    <button onClick={onClick} disabled={disabled} className={finalClass}>
       {children}
     </button>
   );

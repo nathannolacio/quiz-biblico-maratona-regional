@@ -1,0 +1,108 @@
+export type Question = {
+  question: string;
+  answers: string[];
+  correct: number;
+  explanation: string;
+};
+
+export const ephesiansChapter1: Question[] = [
+  {
+    question: "Quem escreveu a carta aos Efésios?",
+    answers: ["Pedro", "Paulo", "João", "Lucas"],
+    correct: 1,
+    explanation: "A carta aos Efésios foi escrita pelo apóstolo Paulo.",
+  },
+  {
+    question: "Segundo Efésios 1:4, Deus nos escolheu quando?",
+    answers: [
+      "Quando aceitamos Jesus",
+      "Antes da fundação do mundo",
+      "No batismo",
+      "Quando nascemos de novo",
+    ],
+    correct: 1,
+    explanation:
+      "Paulo ensina que Deus nos escolheu em Cristo antes da fundação do mundo.",
+  },
+  {
+    question: "Qual é o propósito da escolha de Deus mencionado em Efésios 1:4?",
+    answers: [
+      "Que fôssemos ricos",
+      "Que governássemos na terra",
+      "Que fôssemos santos e irrepreensíveis",
+      "Que tivéssemos muitos dons",
+    ],
+    correct: 2,
+    explanation:
+      "Deus nos escolheu para sermos santos e irrepreensíveis diante dele.",
+  },
+  {
+    question: "Segundo Efésios 1:5, fomos predestinados para quê?",
+    answers: [
+      "Sermos profetas",
+      "Sermos adotados como filhos",
+      "Recebermos riquezas",
+      "Pregarmos às nações",
+    ],
+    correct: 1,
+    explanation:
+      "Paulo afirma que fomos predestinados para adoção de filhos por meio de Jesus Cristo.",
+  },
+  {
+    question: "Segundo Efésios 1:7, temos redenção por meio de quê?",
+    answers: [
+      "Das boas obras",
+      "Da oração",
+      "Do sangue de Cristo",
+      "Da lei de Moisés",
+    ],
+    correct: 2,
+    explanation:
+      "A redenção e o perdão dos pecados vêm pelo sangue de Cristo.",
+  },
+  {
+    question:
+      "Qual é o 'sinal' ou 'penhor' da nossa herança citado em Efésios 1:13-14?",
+    answers: [
+      "A Bíblia",
+      "O batismo nas águas",
+      "O Espírito Santo",
+      "A Santa Ceia",
+    ],
+    correct: 2,
+    explanation:
+      "O Espírito Santo é apresentado como selo e garantia da herança dos salvos.",
+  },
+  {
+    question:
+      "Paulo agradece a Deus porque ouviu falar da fé dos efésios em quem?",
+    answers: ["Moisés", "Abraão", "Jesus Cristo", "João Batista"],
+    correct: 2,
+    explanation:
+      "Paulo agradece pela fé deles no Senhor Jesus e pelo amor para com os santos.",
+  },
+  {
+    question:
+      "Na oração de Paulo em Efésios 1:18, ele pede que os 'olhos do coração' sejam o quê?",
+    answers: ["Fechados", "Iluminados", "Vendados", "Fortalecidos"],
+    correct: 1,
+    explanation:
+      "Paulo pede que os olhos do entendimento sejam iluminados.",
+  },
+  {
+    question:
+      "Segundo Efésios 1:18, Paulo deseja que os crentes conheçam a esperança de quê?",
+    answers: ["Sua riqueza", "Seu chamado", "Sua liderança", "Sua influência"],
+    correct: 1,
+    explanation:
+      "Ele deseja que compreendam a esperança do chamado de Deus.",
+  },
+  {
+    question:
+      "Segundo Efésios 1:21, Jesus está assentado acima de tudo, EXCETO:",
+    answers: ["Principado", "Potestade", "Pecado", "Domínio"],
+    correct: 2,
+    explanation:
+      "Efésios 1:21 menciona principados, potestades, poder e domínio. 'Pecado' não aparece nessa lista.",
+  },
+];
