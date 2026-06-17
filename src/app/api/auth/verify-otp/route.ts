@@ -30,10 +30,22 @@ export async function POST(req: Request) {
 
   const found = await findUserByEmail(email);
 
+  let isNewUser = false;
+
   user = found.data;
 
   if (!user) {
+    isNewUser = true;
+
     const created = await createUser(email);
+
+    if (created.error || !created.data) {
+       return Response.json(
+        { error: "Failed to create user" },
+        { status: 500 }
+      );
+    }
+
     user = created.data;
   }
 
@@ -46,6 +58,7 @@ export async function POST(req: Request) {
   const response = NextResponse.json({
     success: true,
     user,
+    isNewUser,
   });
 
   response.cookies.set("auth_token", token, {

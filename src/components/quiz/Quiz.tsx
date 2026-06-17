@@ -35,18 +35,21 @@ export default function Quiz({
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    async function loadUser() {
+  async function loadUser() {
+    try {
       const data = await getMe();
 
-      if (data?.user?.name) {
-        setPlayerName(data.user.name);
-      } else {
-        setPlayerName("Jogador");
-      }
-    }
+      const name = data?.user?.name;
 
-    loadUser();
-  }, []);
+      setPlayerName(name?.trim() ? name : "Jogador");
+    } catch (err) {
+      console.error("Failed to load user:", err);
+      setPlayerName("Jogador");
+    }
+  }
+
+  loadUser();
+}, []);
 
   function handleSelect(index: number) {
     if (answered) return;

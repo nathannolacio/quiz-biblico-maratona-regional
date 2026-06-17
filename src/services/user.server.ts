@@ -5,7 +5,7 @@ export async function findUserByEmail(email: string) {
     .from("users")
     .select("*")
     .eq("email", email)
-    .single();
+    .maybeSingle();
 }
 
 export async function createUser(email: string) {
@@ -14,7 +14,7 @@ export async function createUser(email: string) {
     .insert({
       id: crypto.randomUUID(),
       email,
-      name: email.split("@")[0],
+      name: null,
     })
     .select()
     .single();

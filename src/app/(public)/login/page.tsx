@@ -37,9 +37,18 @@ export default function LoginPage() {
     }
   }
 
+  function isValidEmail(email: string) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
   async function handleSendOtp() {
     if (!email.trim()) {
       showToast("Digite um email válido", "error");
+      return;
+    }
+
+    if (!isValidEmail(email)) {
+      showToast("Email inválido", "error");
       return;
     }
 
@@ -51,6 +60,7 @@ export default function LoginPage() {
       showToast("Código enviado para seu email", "success");
       setStep(2);
     } catch (err) {
+      console.error(err);
       showToast("Erro ao enviar código", "error");
     }
 
@@ -66,19 +76,24 @@ export default function LoginPage() {
   setLoading(true);
 
   try {
-    await verifyOtp(email, finalCode);
+    const res = await verifyOtp(email, finalCode);
 
     showToast("Login realizado com sucesso!", "success");
 
-    router.push("/chapters");
+    if (res.isNewUser) {
+      router.push("/onboarding");
+    } else {
+      router.push("/chapters");
+    }
+
   } catch (err: unknown) {
     const message = err instanceof Error ? err.message : "Código inválido";
-
 
     showToast(message, "error");
 
     setCode(Array(6).fill(""));
     inputsRef.current[0]?.focus();
+
   } finally {
     setLoading(false);
   }
