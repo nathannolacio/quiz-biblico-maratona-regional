@@ -7,6 +7,9 @@ export default function Home() {
   const router = useRouter();
 
   function handleStart() {
+    console.log("CLICK FUNCIONOU");
+    alert("CLICK FUNCIONOU");
+    
     router.push("/login");
   }
 
