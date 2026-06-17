@@ -22,13 +22,17 @@ export async function POST(req: Request) {
 
     const percentage = Math.round((score / total) * 100);
 
-    const { error } = await supabase.from("quiz_results").insert({
+    const { data, error } = await supabase
+    .from("quiz_results")
+    .insert({
       user_id: userId,
       chapter,
       score,
       total,
       percentage,
-    });
+    })
+    .select()
+    .single();
 
     if (error) {
       return NextResponse.json(
@@ -37,7 +41,7 @@ export async function POST(req: Request) {
       );
     }
 
-    return NextResponse.json({ success: true });
+    return NextResponse.json(data);
   } catch {
     return NextResponse.json(
       { error: "Internal error" },

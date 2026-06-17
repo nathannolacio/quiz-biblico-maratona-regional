@@ -55,22 +55,17 @@ export default function Quiz({
     }
     }
 
-    function handleNext() {
+    async function handleNext() {
     const next = current + 1;
 
     if (next >= questions.length) {
-      saveQuizResult({
+      const res = await saveQuizResult({
         chapter,
         score,
         total: questions.length
       })
-      .then(() => {
-        router.push("/result")
-      })
-      .catch(() => {
-        router.push("/result")
-      })
     
+        router.push(`/result/${res.id}`);
         return;
     }
 

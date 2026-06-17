@@ -1,52 +1,126 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/components/ui/Button";
+import { useToast } from "@/components/ui/Toast";
 
-export default function Result() {
+type Props = {
+  resultId: string;
+};
+
+type QuizResult = {
+  score: number;
+  total: number;
+  chapter: string;
+  percentage: number;
+};
+
+export default function Result({ resultId }: Props) {
   const router = useRouter();
+  const { showToast } = useToast();
 
-  // 🔥 HARD CODED (temporário)
-  const score = 7;
-  const total = 10;
-  const name = "Jogador";
+  const [data, setData] = useState<QuizResult | null>(null);
+  const [loading, setLoading] = useState(true);
 
-  const percentage = Math.round((score / total) * 100);
+  useEffect(() => {
+    async function loadResult() {
+      try {
+        const res = await fetch(`/api/quiz/result/${resultId}`);
 
-  function getMessage() {
-    if (percentage === 100) return "Perfeito! 🔥";
-    if (percentage >= 70) return "Muito bom! 🙌";
-    if (percentage >= 50) return "Bom, mas pode melhorar 📖";
-    return "Continue estudando 💪";
+        if (!res.ok) {
+          throw new Error("Erro ao buscar resultado");
+        }
+
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error(err);
+        showToast("Erro ao carregar resultado", "error");
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (resultId) loadResult();
+  }, [resultId, showToast]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-slate-100">
+        <p className="text-gray-600 animate-pulse">
+          Carregando resultado...
+        </p>
+      </div>
+    );
   }
 
-  return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-slate-100 p-6">
-      <div className="bg-white rounded-2xl shadow-xl p-8 max-w-md w-full text-center">
+  if (!data) {
+    return (
+      <div className="min-h-screen flex items-center justify-center flex-col gap-4 bg-gradient-to-br from-indigo-50 to-slate-100">
+        <p className="text-gray-700">Não foi possível carregar o resultado</p>
 
-        <h1 className="text-2xl font-bold text-indigo-600 mb-4">
+        <Button onClick={() => router.push("/chapters")}>
+          Voltar
+        </Button>
+      </div>
+    );
+  }
+
+  const { score, total, chapter, percentage } = data;
+
+  const isGood = percentage >= 70;
+
+  return (
+    <div className="w-full min-h-screen bg-gradient-to-br from-indigo-50 to-slate-100 flex items-center justify-center p-6">
+
+      <div className="w-full max-w-xl bg-white rounded-2xl shadow-xl p-10 text-center">
+
+        {/* HEADER */}
+        <h1 className="text-3xl font-bold text-indigo-600 mb-2">
           🎉 Resultado do Quiz
         </h1>
 
-        <p className="text-sm text-gray-600 mb-2">
-          Participante: <span className="font-semibold">{name}</span>
+        <p className="text-gray-500 mb-6">
+          Capítulo: <span className="text-indigo-600 font-semibold">{chapter}</span>
         </p>
 
-        <p className="text-lg mb-2">
-          Você acertou <span className="font-bold">{score}</span> de{" "}
-          <span className="font-bold">{total}</span>
-        </p>
+        {/* SCORE CIRCLE */}
+        <div className="relative w-40 h-40 mx-auto mb-6">
+          <div className="absolute inset-0 rounded-full bg-indigo-100" />
 
-        <p className="text-3xl font-bold text-indigo-700 mb-4">
-          {percentage}%
-        </p>
+          <div className="absolute inset-0 flex items-center justify-center flex-col">
+            <span className="text-3xl font-bold text-indigo-600">
+              {percentage}%
+            </span>
+            <span className="text-sm text-gray-500">
+              {score}/{total}
+            </span>
+          </div>
+        </div>
 
-        <p className="text-gray-700 mb-6">
-          {getMessage()}
-        </p>
+        {/* FEEDBACK */}
+        <div
+          className={`mb-6 p-4 rounded-xl font-semibold ${
+            isGood
+              ? "bg-green-50 text-green-600"
+              : "bg-red-50 text-red-600"
+          }`}
+        >
+          {isGood
+            ? "🔥 Excelente desempenho!"
+            : "📖 Continue estudando, você está melhorando!"}
+        </div>
 
-        <Button onClick={() => router.push("/")}>
-          Voltar ao Início
+        {/* DETAILS */}
+        <div className="text-gray-600 text-sm mb-8">
+          Você completou o quiz de <strong>{chapter}</strong> com{" "}
+          <strong>{score}</strong> acertos de <strong>{total}</strong>.
+        </div>
+
+        {/* BUTTON */}
+        <Button onClick={() => router.push("/chapters")}>
+          Voltar aos capítulos
         </Button>
 
       </div>

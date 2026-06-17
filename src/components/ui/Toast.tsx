@@ -20,16 +20,16 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   function showToast(message: string, type: ToastType = "info") {
-    const id = Date.now();
+  const id = Date.now();
 
-    const newToast: Toast = { id, message, type };
+  setToasts((prev) => [...prev, { id, message, type }]);
 
-    setToasts((prev) => [...prev, newToast]);
+  const timeout = setTimeout(() => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, 3000);
 
-    setTimeout(() => {
-      setToasts((prev) => prev.filter((t) => t.id !== id));
-    }, 3000);
-  }
+  return () => clearTimeout(timeout);
+}
 
   return (
     <ToastContext.Provider value={{ showToast }}>
