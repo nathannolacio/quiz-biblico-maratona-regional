@@ -17,21 +17,42 @@ export default function Chapters() {
                 </p>
 
                 <div className="grid gap-4">
-                {chapters.map((chapter) => (
-                    <Link
-                        key={chapter.id}
-                        href={`/quiz/${chapter.id}`}
-                        className="p-4 rounded-xl bg-gray-100 hover:bg-indigo-100 hover:text-indigo-700 transition text-left font-medium"
+
+                    {chapters.map((chapter) => {
+                        if (!chapter.unlocked) {
+                            return (
+                                <div
+                                key={chapter.id}
+                                className="p-4 border rounded-lg opacity-40 cursor-not-allowed"
+                                >
+                                <h2 className="font-semibold">
+                                    {chapter.title}
+                                </h2>
+
+                                <p className="text-sm text-red-500">
+                                    Em breve
+                                </p>
+                                </div>
+                            );
+                        }
+
+                        return (
+                        <Link
+                            key={chapter.id}
+                            href={`/quiz/${chapter.id}`}
+                            className="p-4 border rounded-lg hover:bg-slate-50 transition"
                         >
                             <h2 className="font-semibold">
-                                {chapter.title}
+                            {chapter.title}
                             </h2>
 
                             <p className="text-sm text-slate-500">
-                                {chapter.questions.length} questões
+                            {chapter.questions.length} questions
                             </p>
-                    </Link>
-                ))}
+                        </Link>
+                        );
+                    })}
+
                 </div>
 
                 <div className="mt-8 flex justify-center">

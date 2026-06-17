@@ -1,6 +1,6 @@
 import Quiz from "@/components/quiz/Quiz";
 import { chapters } from "@/data/chapters";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 
 type QuizPageProps = {
     params: Promise<{
@@ -16,6 +16,10 @@ export default async function QuizPage({
     const chapter = chapters.find(
         (chapter) => chapter.id === Number(chapterId)
     )
+
+    if (!chapter?.unlocked) {
+        redirect("/chapters");
+    }
 
     if (!chapter) {
         notFound();
