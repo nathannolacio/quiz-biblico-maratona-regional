@@ -19,31 +19,37 @@ type QuizResult = {
 export default function Result({ resultId }: Props) {
   const router = useRouter();
   const { showToast } = useToast();
+  const [error, setError] = useState(false);
 
   const [data, setData] = useState<QuizResult | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function loadResult() {
-      try {
-        const res = await fetch(`/api/quiz/result/${resultId}`);
+  if (!resultId) return;
 
-        if (!res.ok) {
-          throw new Error("Erro ao buscar resultado");
-        }
+  async function loadResult() {
+    const res = await fetch(`/api/quiz/result/${resultId}`);
 
-        const json = await res.json();
-        setData(json);
-      } catch (err) {
-        console.error(err);
-        showToast("Erro ao carregar resultado", "error");
-      } finally {
-        setLoading(false);
-      }
+    if (!res.ok) {
+      throw new Error("Erro ao buscar resultado");
     }
 
-    if (resultId) loadResult();
-  }, [resultId, showToast]);
+    const json = await res.json();
+    setData(json);
+    setLoading(false);
+  }
+
+  loadResult().catch(() => {
+    setLoading(false);
+    setError(true);
+  });
+}, [resultId]);
+
+useEffect(() => {
+  if (error) {
+    showToast("Erro ao carregar resultado", "error");
+  }
+}, [error, showToast]);
 
   if (loading) {
     return (

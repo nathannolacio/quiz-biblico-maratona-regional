@@ -1,5 +1,5 @@
 import Quiz from "@/components/quiz/Quiz";
-import { chapters } from "@/data/chapters";
+import { chapters } from "@/data/quiz";
 import { notFound, redirect } from "next/navigation";
 
 type QuizPageProps = {
@@ -28,7 +28,7 @@ export default async function QuizPage({
     return (
         <main className="min-h-screen bg-gray-100 flex items-center justify-center">
             <Quiz 
-                chapter={chapterId}
+                quiz_id={chapterId}
                 questions={chapter.questions}
                 title={chapter.title}
             />

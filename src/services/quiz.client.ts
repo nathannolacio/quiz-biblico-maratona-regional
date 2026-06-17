@@ -1,5 +1,5 @@
-export async function saveQuizResult(data: {
-  chapter: string;
+export async function saveQuizAttempt(data: {
+  quiz_id: string;
   score: number;
   total: number;
 }) {

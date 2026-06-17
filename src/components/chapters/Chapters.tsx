@@ -1,5 +1,5 @@
 import Button from "../ui/Button";
-import { chapters } from "@/data/chapters";
+import { chapters } from "@/data/quiz";
 import Link from "next/link";
 
 export default function Chapters() {

@@ -7,14 +7,14 @@ import { ephesiansChapter5 } from "./chapters/ephesians-chapter-5";
 import { ephesiansChapter6 } from "./chapters/ephesians-chapter-6";
 import { chapterRelease } from "@/config/chapterRelease";
 
-export type Chapter = {
+export type Quiz = {
   id: number;
   title: string;
   questions: Question[];
   unlocked: boolean;
 };
 
-export const chapters: Chapter[] = [
+export const chapters: Quiz[] = [
     {
         id: 1,
         title: "Capítulo 1",

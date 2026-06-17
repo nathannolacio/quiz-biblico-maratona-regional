@@ -1,47 +1,54 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button";
 import { getMe } from "@/services/user.client";
 import { useRouter } from "next/navigation";
-import { saveQuizResult } from "@/services/quiz.client";
 import { Question } from "@/types/question";
+import { saveQuizAttempt } from "@/services/quiz.client";
 
 type QuizProps = {
-  chapter: string;
+  quiz_id: string;
   questions: Question[];
   title: string;
 };
 
 export default function Quiz({
-  chapter,
+  quiz_id,
   questions,
   title,
 }: QuizProps) {
-    const [current, setCurrent] = useState(0);
-    const [selected, setSelected] = useState<number | null>(null);
-    const [answered, setAnswered] = useState(false);
-    const [score, setScore] = useState(0);
-    const [isCorrect, setIsCorrect] = useState(false);
-    const [playerName, setPlayerName] = useState("");
-    const router = useRouter();
-    const question = questions[current];
+  const [current, setCurrent] = useState(0);
+  const [selected, setSelected] = useState<number | null>(null);
+  const [answered, setAnswered] = useState(false);
+  const [score, setScore] = useState(0);
+  const [isCorrect, setIsCorrect] = useState(false);
+  const [playerName, setPlayerName] = useState("");
 
-    useEffect(() => {
-        async function loadUser() {
-            const data = await getMe();
+  const router = useRouter();
+  const question = questions[current];
 
-            if (data?.user?.name) {
-                setPlayerName(data.user.name);
-            } else {
-                setPlayerName("Jogador")
-            }
-        }
+  // 🔒 proteção contra múltiplos submits
+  const isSubmittingRef = useRef(false);
+  const hasSubmittedRef = useRef(false);
 
-        loadUser();
-    }, []);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-    function handleSelect(index: number) {
+  useEffect(() => {
+    async function loadUser() {
+      const data = await getMe();
+
+      if (data?.user?.name) {
+        setPlayerName(data.user.name);
+      } else {
+        setPlayerName("Jogador");
+      }
+    }
+
+    loadUser();
+  }, []);
+
+  function handleSelect(index: number) {
     if (answered) return;
 
     setSelected(index);
@@ -51,32 +58,50 @@ export default function Quiz({
     setIsCorrect(correct);
 
     if (correct) {
-        setScore((s) => s + 1);
+      setScore((s) => s + 1);
     }
-    }
+  }
 
-    async function handleNext() {
-    const next = current + 1;
+  // 🔥 FUNÇÃO FINALIZADORA BLINDADA
+  async function finishQuiz() {
+    if (hasSubmittedRef.current) return;
 
-    if (next >= questions.length) {
-      const res = await saveQuizResult({
-        chapter,
-        score,
-        total: questions.length
-      })
-    
-        router.push(`/result/${res.id}`);
+    hasSubmittedRef.current = true;
+
+    const res = await saveQuizAttempt({
+      quiz_id,
+      score,
+      total: questions.length,
+    });
+
+    router.push(`/result/${res.id}`);
+  }
+
+  async function handleNext() {
+    if (isSubmittingRef.current) return;
+
+    isSubmittingRef.current = true;
+    setIsSubmitting(true);
+
+    try {
+      const next = current + 1;
+
+      if (next >= questions.length) {
+        await finishQuiz();
         return;
-    }
+      }
 
       setCurrent(next);
       setSelected(null);
       setAnswered(false);
+    } finally {
+      isSubmittingRef.current = false;
+      setIsSubmitting(false);
     }
+  }
 
   return (
     <div className="w-full min-h-screen bg-gradient-to-br from-indigo-50 to-slate-100 flex items-center justify-center p-6">
-
       <div className="w-full max-w-2xl bg-white rounded-2xl shadow-xl p-8">
 
         {/* HEADER */}
@@ -86,40 +111,41 @@ export default function Quiz({
 
         <div className="flex justify-between items-center mb-3 text-sm font-medium text-gray-600">
 
-        {/* PLAYER */}
-        <div>
+          {/* PLAYER */}
+          <div>
             👤 <span className="text-indigo-600 font-semibold">
-                {playerName}
+              {playerName}
             </span>
-        </div>
+          </div>
 
-        {/* CHAPTER */}
-        <div className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">
+          {/* CHAPTER */}
+          <div className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">
             Efésios {title}
-        </div>
+          </div>
 
         </div>
 
+        {/* PROGRESS BAR */}
         <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden mb-6">
-            <div
-                className="h-full bg-gradient-to-r from-indigo-600 via-purple-500 to-indigo-700 transition-all duration-500 ease-out"
-                style={{
-                width: `${((current + 1) / questions.length) * 100}%`,
-                }}
-            />
+          <div
+            className="h-full bg-gradient-to-r from-indigo-600 via-purple-500 to-indigo-700 transition-all duration-500 ease-out"
+            style={{
+              width: `${((current + 1) / questions.length) * 100}%`,
+            }}
+          />
         </div>
 
-        {/* PROGRESSO */}
+        {/* PROGRESS TEXT */}
         <div className="text-sm text-gray-500 mb-4">
           Pergunta {current + 1} de {questions.length}
         </div>
 
-        {/* PERGUNTA */}
+        {/* QUESTION */}
         <h2 className="text-lg font-semibold text-gray-800 mb-6 leading-relaxed">
           {question.question}
         </h2>
 
-        {/* RESPOSTAS */}
+        {/* ANSWERS */}
         <div className="grid gap-3">
           {question.answers.map((answer, index) => {
             const isSelected = selected === index;
@@ -156,8 +182,12 @@ export default function Quiz({
         {/* FEEDBACK */}
         {answered && (
           <div className="mt-6 p-4 rounded-xl bg-gray-50 border-l-4 border-indigo-500">
-            <p className={`font-semibold mb-2 ${isCorrect ? "text-green-600" : "text-red-600"}`}>
-                {isCorrect ? "✔ Resposta correta" : "✘ Resposta incorreta"}
+            <p
+              className={`font-semibold mb-2 ${
+                isCorrect ? "text-green-600" : "text-red-600"
+              }`}
+            >
+              {isCorrect ? "✔ Resposta correta" : "✘ Resposta incorreta"}
             </p>
             <p className="text-gray-700 text-sm">
               {question.explanation}
@@ -165,16 +195,16 @@ export default function Quiz({
           </div>
         )}
 
-        {/* BOTÃO PRÓXIMA */}
+        {/* BUTTON */}
         <div className="mt-6 flex justify-end">
-            <Button
-                onClick={handleNext}
-                disabled={!answered}
-            >
-                Próxima pergunta
-            </Button>
+          <Button
+            onClick={handleNext}
+            disabled={!answered || isSubmitting}
+          >
+            Próxima pergunta
+          </Button>
         </div>
-        
+
       </div>
     </div>
   );
