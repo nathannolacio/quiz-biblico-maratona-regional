@@ -47,7 +47,7 @@ export default function Chapters() {
                             </h2>
 
                             <p className="text-sm text-slate-500">
-                            {chapter.questions.length} questions
+                            {chapter.questions.length} questões
                             </p>
                         </Link>
                         );
