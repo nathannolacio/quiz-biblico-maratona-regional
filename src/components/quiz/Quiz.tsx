@@ -3,11 +3,21 @@
 import { useEffect, useState } from "react";
 import Button from "../ui/Button";
 import { getMe } from "@/services/user.client";
-import { ephesiansChapter1 } from "@/data/ephesians-chapter-1";
 import { useRouter } from "next/navigation";
 import { saveQuizResult } from "@/services/quiz.client";
+import { Question } from "@/types/question";
 
-export default function Quiz() {
+type QuizProps = {
+  chapter: string;
+  questions: Question[];
+  title: string;
+};
+
+export default function Quiz({
+  chapter,
+  questions,
+  title,
+}: QuizProps) {
     const [current, setCurrent] = useState(0);
     const [selected, setSelected] = useState<number | null>(null);
     const [answered, setAnswered] = useState(false);
@@ -15,9 +25,6 @@ export default function Quiz() {
     const [isCorrect, setIsCorrect] = useState(false);
     const [playerName, setPlayerName] = useState("");
     const router = useRouter();
-
-    const chapter = "1";
-    const questions = ephesiansChapter1;
     const question = questions[current];
 
     useEffect(() => {
@@ -93,7 +100,7 @@ export default function Quiz() {
 
         {/* CHAPTER */}
         <div className="bg-indigo-50 text-indigo-600 px-3 py-1 rounded-full text-xs font-semibold">
-            Efésios {chapter}
+            Efésios {title}
         </div>
 
         </div>

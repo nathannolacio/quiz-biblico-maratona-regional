@@ -1,11 +1,6 @@
-export type Question = {
-  question: string;
-  answers: string[];
-  correct: number;
-  explanation: string;
-};
+import { Question } from "@/types/question";
 
-export const ephesiansChapter1: Question[] = [
+export const ephesiansChapter3: Question[] = [
   {
     question: "Quem escreveu a carta aos Efésios?",
     answers: ["Pedro", "Paulo", "João", "Lucas"],
