@@ -6,10 +6,7 @@ import { useRouter } from "next/navigation";
 export default function Home() {
   const router = useRouter();
 
-  function handleStart() {
-    console.log("CLICK FUNCIONOU");
-    alert("CLICK FUNCIONOU");
-    
+  function handleStart() {    
     router.push("/login");
   }
 
