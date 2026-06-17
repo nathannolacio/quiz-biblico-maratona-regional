@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: "Teste seus conhecimentos sobre a carta de Efésios com este quiz bíblico interativo. Desafie-se e aprenda mais sobre as mensagens e ensinamentos contidos nesta epístola do Novo Testamento.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

@@ -69,7 +69,7 @@ export default function Quiz() {
 
       setCurrent(next);
       setSelected(null);
-      setAnswered(false);''
+      setAnswered(false);
     }
 
   return (
