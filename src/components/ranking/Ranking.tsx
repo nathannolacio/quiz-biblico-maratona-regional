@@ -27,6 +27,8 @@ export default function Ranking() {
 
   const chapter = searchParams.get("chapter") ?? undefined;
 
+  const isChapterView = !!chapter;
+
   const currentUserData: RankingUser | null =
     currentUserId
       ? ranking.find((user) => user.user_id === currentUserId) ?? null
@@ -81,6 +83,13 @@ export default function Ranking() {
         <RankingHeader chapter={chapter} />
 
         <RankingFilter chapter={chapter} />
+
+        {isChapterView && (
+          <div className="mb-4 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-xl">
+            📊 O ranking por capítulo ainda não está disponível.
+            Exibindo o ranking geral como padrão.
+          </div>
+        )}
 
         {loading ? (
           <RankingSkeleton />
