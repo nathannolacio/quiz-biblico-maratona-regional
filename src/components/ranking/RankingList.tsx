@@ -3,12 +3,12 @@ import RankingRow from "./RankingRow";
 
 type RankingListProps = {
   ranking: RankingUser[];
-  currentUser: string;
+  currentUserId: string | null;
 };
 
 export default function RankingList({
   ranking,
-  currentUser,
+  currentUserId,
 }: RankingListProps) {
   return (
     <div className="bg-white rounded-2xl shadow-md overflow-hidden">
@@ -23,7 +23,7 @@ export default function RankingList({
           <RankingRow
             key={user.position}
             user={user}
-            isCurrentUser={user.name === currentUser}
+            isCurrentUser={user.user_id === currentUserId}
           />
         ))}
       </div>
