@@ -19,6 +19,7 @@ export default function Ranking() {
   const searchParams = useSearchParams();
 
   const [ranking, setRanking] = useState<RankingUser[]>([]);
+  const [leaders, setLeaders] = useState<RankingUser[]>([]);
 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -55,9 +56,7 @@ export default function Ranking() {
       try {
         const { students, leaders } = await getGeneralRanking();
 
-        console.log(students);
-
-        const rankingUsers = students.map(
+        const rankingUsers: RankingUser[] = students.map(
           (user: GeneralRankingResponse, index: number) => ({
             user_id: user.user_id,
             position: index + 1,
@@ -66,7 +65,17 @@ export default function Ranking() {
           })
         );
 
+        const leaderUsers: RankingUser[] = leaders.map(
+          (user: GeneralRankingResponse) => ({
+            user_id: user.user_id,
+            position: 0,
+            name: user.name,
+            score: user.total_score,
+          })
+        );
+
         setRanking(rankingUsers);
+        setLeaders(leaderUsers);
       } catch (error) {
         console.error(error);
         setError("Não foi possível carregar o ranking no momento.");
@@ -114,6 +123,38 @@ export default function Ranking() {
               ranking={ranking}
               currentUserId={currentUserId}
             />
+
+            {leaders.length > 0 && (
+              <div className="mt-8 bg-white rounded-2xl shadow-sm border border-slate-200 p-4">
+                <div className="flex items-center gap-2 mb-4">
+                  <span className="text-xl">👑</span>
+                  <h2 className="text-lg font-bold text-slate-800">
+                    Participação dos Líderes
+                  </h2>
+                </div>
+
+                <p className="text-sm text-slate-500 mb-4">
+                  Participam dos quizzes, mas não fazem parte da classificação oficial.
+                </p>
+
+                <div className="space-y-2">
+                  {leaders.map((leader) => (
+                    <div
+                      key={leader.user_id}
+                      className="flex items-center justify-between rounded-xl border border-slate-100 bg-slate-50 px-4 py-3"
+                    >
+                      <span className="font-medium text-slate-700">
+                        {leader.name}
+                      </span>
+
+                      <span className="font-semibold text-indigo-600">
+                        {leader.score} pts
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </>
         )}
 
