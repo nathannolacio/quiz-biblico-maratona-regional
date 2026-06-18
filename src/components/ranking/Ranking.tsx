@@ -53,9 +53,11 @@ export default function Ranking() {
   useEffect(() => {
     async function loadRanking() {
       try {
-        const data = await getGeneralRanking();
+        const { students, leaders } = await getGeneralRanking();
 
-        const rankingUsers: RankingUser[] = data.map(
+        console.log(students);
+
+        const rankingUsers = students.map(
           (user: GeneralRankingResponse, index: number) => ({
             user_id: user.user_id,
             position: index + 1,
