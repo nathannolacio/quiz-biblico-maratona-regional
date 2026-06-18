@@ -1,103 +1,195 @@
 import { Question } from "@/types/question";
 
 export const ephesiansChapter4: Question[] = [
+  // =========================
+  // FÁCIL (1–5)
+  // =========================
   {
-    question: "Quem escreveu a carta aos Efésios?",
-    answers: ["Pedro", "Paulo", "João", "Lucas"],
-    correct: 1,
-    explanation: "A carta aos Efésios foi escrita pelo apóstolo Paulo.",
-  },
-  {
-    question: "Segundo Efésios 1:4, Deus nos escolheu quando?",
+    question: "Qual é o chamado principal que Paulo faz para os cristãos?",
     answers: [
-      "Quando aceitamos Jesus",
-      "Antes da fundação do mundo",
-      "No batismo",
-      "Quando nascemos de novo",
+      "Seguir regras religiosas antigas com perfeição",
+      "Viver de forma digna do chamado que receberam",
+      "Viver separado dos outros grupos de cristãos",
+      "Buscar sucesso e reconhecimento espiritual",
     ],
     correct: 1,
     explanation:
-      "Paulo ensina que Deus nos escolheu em Cristo antes da fundação do mundo.",
+      "Paulo incentiva os crentes a viverem de forma digna do chamado que receberam. (Efésios 4:1)",
   },
   {
-    question: "Qual é o propósito da escolha de Deus mencionado em Efésios 1:4?",
+    question: "Qual conjunto melhor representa a unidade que Paulo ensina?",
     answers: [
-      "Que fôssemos ricos",
-      "Que governássemos na terra",
-      "Que fôssemos santos e irrepreensíveis",
-      "Que tivéssemos muitos dons",
-    ],
-    correct: 2,
-    explanation:
-      "Deus nos escolheu para sermos santos e irrepreensíveis diante dele.",
-  },
-  {
-    question: "Segundo Efésios 1:5, fomos predestinados para quê?",
-    answers: [
-      "Sermos profetas",
-      "Sermos adotados como filhos",
-      "Recebermos riquezas",
-      "Pregarmos às nações",
+      "Um só povo, uma só lei e uma só tradição",
+      "Um só Senhor, uma só fé e um só batismo",
+      "Um só corpo, uma só organização e um só templo",
+      "Um só Espírito, uma só autoridade e uma só igreja",
     ],
     correct: 1,
     explanation:
-      "Paulo afirma que fomos predestinados para adoção de filhos por meio de Jesus Cristo.",
+      "Paulo fala de um só corpo, um só Espírito, uma só esperança, um só Senhor, uma só fé e um só batismo. (Efésios 4:4-6)",
   },
   {
-    question: "Segundo Efésios 1:7, temos redenção por meio de quê?",
+    question: "Como Deus distribui a graça entre os cristãos?",
     answers: [
-      "Das boas obras",
-      "Da oração",
-      "Do sangue de Cristo",
-      "Da lei de Moisés",
+      "De acordo com a maturidade da igreja",
+      "De acordo com a fé individual de cada pessoa",
+      "Igualmente em todos os dons espirituais",
+      "De acordo com o dom que Cristo dá a cada um",
+    ],
+    correct: 3,
+    explanation:
+      "A graça é dada a cada um segundo a medida do dom de Cristo. (Efésios 4:7)",
+  },
+  {
+    question: "O que Paulo fala sobre Jesus ter subido às alturas?",
+    answers: [
+      "Que Ele foi exaltado sem ter passado pela cruz",
+      "Que Ele recebeu autoridade dos discípulos",
+      "Que Ele também desceu às partes mais baixas da terra antes",
+      "Que Ele venceu apenas problemas humanos",
     ],
     correct: 2,
     explanation:
-      "A redenção e o perdão dos pecados vêm pelo sangue de Cristo.",
+      "Paulo explica que Cristo subiu depois de ter descido às partes inferiores da terra. (Efésios 4:9-10)",
   },
   {
-    question:
-      "Qual é o 'sinal' ou 'penhor' da nossa herança citado em Efésios 1:13-14?",
+    question: "Pra que servem os dons que Jesus deu para a igreja?",
     answers: [
-      "A Bíblia",
-      "O batismo nas águas",
-      "O Espírito Santo",
-      "A Santa Ceia",
+      "Para criar cargos e posições dentro da igreja",
+      "Para ajudar a igreja a crescer e ficar mais forte",
+      "Para separar líderes e membros",
+      "Para substituir a necessidade de comunidade",
+    ],
+    correct: 1,
+    explanation:
+      "Os dons são dados para edificar e fortalecer o corpo de Cristo. (Efésios 4:11-12)",
+  },
+
+  // =========================
+  // MÉDIO (6–10)
+  // =========================
+  {
+    question: "Qual é o objetivo dos dons e ministérios na igreja?",
+    answers: [
+      "Criar níveis de autoridade entre os membros",
+      "Fazer os cristãos crescerem até amadurecerem na fé",
+      "Garantir que todos tenham o mesmo papel",
+      "Organizar a estrutura da igreja local",
+    ],
+    correct: 1,
+    explanation:
+      "Os dons existem para o crescimento e amadurecimento da igreja. (Efésios 4:12)",
+  },
+  {
+    question: "Qual é a meta final desse crescimento espiritual?",
+    answers: [
+      "Alcançar independência espiritual total",
+      "Ter mais experiência em liderança espiritual",
+      "Cumprir todas as regras religiosas perfeitamente",
+      "Chegar à unidade da fé e conhecer melhor Jesus",
+    ],
+    correct: 3,
+    explanation:
+      "Paulo fala sobre unidade da fé e conhecimento do Filho de Deus. (Efésios 4:13)",
+  },
+  {
+    question: "O que marca uma pessoa espiritualmente madura segundo Paulo?",
+    answers: [
+      "Ter todos os dons espirituais",
+      "Se afastar do mundo completamente",
+      "Não ser facilmente enganada por qualquer ensino",
+      "Nunca ter dúvidas sobre nada",
     ],
     correct: 2,
     explanation:
-      "O Espírito Santo é apresentado como selo e garantia da herança dos salvos.",
+      "A maturidade evita que a pessoa seja levada por qualquer doutrina diferente. (Efésios 4:14)",
   },
   {
-    question:
-      "Paulo agradece a Deus porque ouviu falar da fé dos efésios em quem?",
-    answers: ["Moisés", "Abraão", "Jesus Cristo", "João Batista"],
+    question: "Como Paulo diz que devemos viver entre verdade e amor?",
+    answers: [
+      "Priorizando o amor acima da verdade",
+      "Escolhendo entre verdade ou amor dependendo da situação",
+      "Sendo sempre diretos sem pensar nas pessoas",
+      "Falando a verdade com amor em tudo",
+    ],
+    correct: 3,
+    explanation:
+      "Paulo ensina a falar a verdade em amor. (Efésios 4:15)",
+  },
+  {
+    question: "Como funciona o corpo de Cristo segundo Paulo?",
+    answers: [
+      "Cada um age de forma independente",
+      "A liderança controla tudo de cima",
+      "Cada membro tem funções totalmente separadas",
+      "Cada parte trabalha junto para o corpo crescer em amor",
+    ],
+    correct: 3,
+    explanation:
+      "O corpo cresce unido, com cada parte ajudando no crescimento. (Efésios 4:16)",
+  },
+
+  // =========================
+  // DIFÍCIL (11–15)
+  // =========================
+  {
+    question: "O que acontece quando alguém não amadurece na fé?",
+    answers: [
+      "Fica instável e pode ser enganado facilmente",
+      "Não consegue mais aprender nada novo",
+      "Perde automaticamente a salvação",
+      "Para de participar da igreja",
+    ],
+    correct: 0,
+    explanation:
+      "A falta de maturidade deixa a pessoa instável e vulnerável a enganos. (Efésios 4:14)",
+  },
+  {
+    question: "Qual é o crescimento ideal do cristão?",
+    answers: [
+      "Crescer em regras e práticas religiosas",
+      "Crescer em experiência de liderança",
+      "Crescer só no conhecimento bíblico",
+      "Crescer em tudo até parecer mais com Cristo",
+    ],
+    correct: 3,
+    explanation:
+      "O crescimento saudável é em direção a Cristo em todas as áreas. (Efésios 4:15)",
+  },
+  {
+    question: "O que mantém a igreja funcionando bem como um corpo?",
+    answers: [
+      "Todos fazendo exatamente a mesma coisa",
+      "A eliminação de diferenças entre pessoas",
+      "Um líder controlando todas as decisões",
+      "Cada parte trabalhando junto com amor",
+    ],
+    correct: 3,
+    explanation:
+      "O corpo cresce quando todas as partes trabalham juntas em amor. (Efésios 4:16)",
+  },
+  {
+    question: "Como era a vida das pessoas antes de conhecerem Deus?",
+    answers: [
+      "Viviam com plena consciência espiritual",
+      "Viviam mais livres espiritualmente",
+      "Viviam longe de Deus por não entenderem a verdade",
+      "Viviam muito próximos de Deus",
+    ],
     correct: 2,
     explanation:
-      "Paulo agradece pela fé deles no Senhor Jesus e pelo amor para com os santos.",
+      "Paulo diz que elas viviam afastadas de Deus por ignorância e dureza de coração. (Efésios 4:18)",
   },
   {
-    question:
-      "Na oração de Paulo em Efésios 1:18, ele pede que os 'olhos do coração' sejam o quê?",
-    answers: ["Fechados", "Iluminados", "Vendados", "Fortalecidos"],
-    correct: 1,
-    explanation:
-      "Paulo pede que os olhos do entendimento sejam iluminados.",
-  },
-  {
-    question:
-      "Segundo Efésios 1:18, Paulo deseja que os crentes conheçam a esperança de quê?",
-    answers: ["Sua riqueza", "Seu chamado", "Sua liderança", "Sua influência"],
-    correct: 1,
-    explanation:
-      "Ele deseja que compreendam a esperança do chamado de Deus.",
-  },
-  {
-    question:
-      "Segundo Efésios 1:21, Jesus está assentado acima de tudo, EXCETO:",
-    answers: ["Principado", "Potestade", "Pecado", "Domínio"],
+    question: "O que precisa mudar na vida de quem segue Cristo?",
+    answers: [
+      "A pessoa precisa se isolar do mundo",
+      "Só os hábitos externos precisam mudar",
+      "A forma de pensar e viver precisa ser renovada",
+      "A pessoa precisa mudar de religião",
+    ],
     correct: 2,
     explanation:
-      "Efésios 1:21 menciona principados, potestades, poder e domínio. 'Pecado' não aparece nessa lista.",
+      "Paulo ensina a renovar a mente e abandonar o antigo modo de vida. (Efésios 4:22-23)",
   },
 ];
