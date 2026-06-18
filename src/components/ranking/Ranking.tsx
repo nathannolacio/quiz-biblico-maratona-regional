@@ -1,41 +1,62 @@
 "use client";
 
-import Button from "@/components/ui/Button";
+import { useRouter, useSearchParams } from "next/navigation";
+import Button from "../ui/Button";
+import RankingHeader from "./RankingHeader";
+import RankingFilter from "./RankingFilter";
+import UserPositionCard from "./UserPositionCard";
+import RankingPodium from "./RankingPodium";
+import RankingList from "./RankingList";
+import { rankings } from "@/data/ranking.mock";
 
-export default function RankingPage() {
+export default function Ranking() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const chapter = searchParams.get("chapter") ?? undefined;
+
+ const ranking =
+  chapter &&
+  rankings[chapter as keyof typeof rankings]
+    ? rankings[chapter as keyof typeof rankings]
+    : rankings.general;
+
+  const currentUser = "Nathan";
+
+  const currentUserData =
+    ranking.find((user) => user.name === currentUser) ?? null;
+
   return (
-    <main className="w-full h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 flex items-center justify-center p-6">
+    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 p-4 sm:p-6">
+      <div className="max-w-4xl mx-auto">
 
-      <div className="flex flex-col gap-10 max-w-3xl w-full bg-white rounded-2xl p-8 shadow-lg">
+        <RankingHeader
+          chapter={chapter}
+        />
 
-        <h1 className="text-center font-bold text-indigo-600 text-4xl">
-          🏆 Ranking
-        </h1>
+        <RankingFilter 
+          chapter={chapter}
+        />
 
-        <div className="space-y-3">
-          <h2 className="text-center font-semibold text-gray-700 text-xl">
-            Em breve
-          </h2>
+        <UserPositionCard 
+          user={currentUserData}
+        />
 
-          <p className="text-center text-gray-600 leading-relaxed">
-            Logo você poderá ver um ranking com a sua pontuação e a das outras pessoas!
-          </p>
-        </div>
+        <RankingPodium 
+          ranking={ranking}
+        />
+        
+        <RankingList 
+          ranking={ranking}
+          currentUser={currentUser}
+        />
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-
-          <Button variant="primary" href="/chapters">
-            Ir para o Quiz
+        <div className="mt-8 flex justify-center">
+          <Button onClick={() => router.push("/")}>
+            Voltar ao início
           </Button>
-
-          <Button variant="secondary" href="/">
-            Voltar para Home
-          </Button>
-
         </div>
-
       </div>
-
     </main>
   );
 }

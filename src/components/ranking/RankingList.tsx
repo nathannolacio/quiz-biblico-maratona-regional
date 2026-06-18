@@ -1,0 +1,32 @@
+import { RankingUser } from "@/types/rankingUser";
+import RankingRow from "./RankingRow";
+
+type RankingListProps = {
+  ranking: RankingUser[];
+  currentUser: string;
+};
+
+export default function RankingList({
+  ranking,
+  currentUser,
+}: RankingListProps) {
+  return (
+    <div className="bg-white rounded-2xl shadow-md overflow-hidden">
+      <div className="px-6 py-4 border-b border-slate-100">
+        <h2 className="font-semibold text-slate-800">
+          Classificação Completa
+        </h2>
+      </div>
+
+      <div className="divide-y divide-slate-100">
+        {ranking.map((user) => (
+          <RankingRow
+            key={user.position}
+            user={user}
+            isCurrentUser={user.name === currentUser}
+          />
+        ))}
+      </div>
+    </div>
+  );
+}
