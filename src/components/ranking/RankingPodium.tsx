@@ -4,27 +4,74 @@ type RankingPodiumProps = {
   ranking: RankingUser[];
 };
 
+function EmptySlot({ position }: { position: "first" | "second" | "third" }) {
+  const icon =
+    position === "first" ? "🥇" :
+    position === "second" ? "🥈" :
+    "🥉";
+
+  const title =
+    position === "first"
+      ? "1º lugar em aberto"
+      : position === "second"
+      ? "2º lugar em aberto"
+      : "3º lugar em aberto";
+
+  return (
+    <div className="flex flex-col items-center justify-center h-full text-slate-400">
+      <div className="text-4xl mb-2 opacity-70">
+        {icon}
+      </div>
+
+      <p className="text-sm font-semibold text-slate-500">
+        {title}
+      </p>
+
+      <p className="text-xs text-slate-400 mt-1">
+        Aguardando participantes
+      </p>
+    </div>
+  );
+}
+
 export default function RankingPodium({
   ranking,
 }: RankingPodiumProps) {
-  if (ranking.length < 3) {
-    return null;
+  const sortedRanking = [...ranking].sort((a: RankingUser, b: RankingUser) => {
+    if (b.score !== a.score) {
+      return b.score - a.score;
+    }
+
+    return (
+      new Date(a.created_at ?? 0).getTime() -
+      new Date(b.created_at ?? 0).getTime()
+    );
+  });
+
+  function getUser(index: number) {
+    return sortedRanking[index];
   }
 
-  const first = ranking[0];
-  const second = ranking[1];
-  const third = ranking[2];
+  const first = getUser(0);
+  const second = getUser(1);
+  const third = getUser(2);
+
+  const mobileSlots = [
+    sortedRanking[0],
+    sortedRanking[1],
+    sortedRanking[2],
+  ];
 
   return (
     <>
       {/* Mobile */}
       <div className="flex flex-col gap-4 mb-8 md:hidden">
-        {ranking.slice(0, 3).map((user, index) => {
+        {mobileSlots.map((user, index) => {
           const position = index + 1;
 
           return (
             <div
-              key={user.user_id}
+              key={user?.user_id ?? position}
               className={`bg-white rounded-2xl shadow-md p-4 flex items-center justify-between ${
                 position === 1 ? "border-2 border-yellow-400" : ""
               }`}
@@ -38,7 +85,7 @@ export default function RankingPodium({
 
                 <div>
                   <p className="font-semibold text-slate-800">
-                    {user.name}
+                    {user?.name ?? "Aguardando participantes"}
                   </p>
 
                   <p className="text-sm text-slate-500">
@@ -48,7 +95,7 @@ export default function RankingPodium({
               </div>
 
               <span className="font-bold text-indigo-600">
-                {user.score} pts
+                {user?.score ?? 0} pts
               </span>
             </div>
           );
@@ -58,39 +105,57 @@ export default function RankingPodium({
       {/* Desktop */}
       <div className="hidden md:grid grid-cols-3 gap-4 mb-8 items-end">
         <div className="bg-white rounded-2xl shadow-md p-4 text-center h-40 flex flex-col justify-center">
-          <span className="text-3xl mb-2">🥈</span>
+          {second ? (
+            <>
+              <span className="text-3xl mb-2">🥈</span>
 
-          <h2 className="font-semibold text-slate-800">
-            {second.name}
-          </h2>
+              <h2 className="font-semibold text-slate-800">
+                {second.name}
+              </h2>
 
-          <p className="text-indigo-600 font-bold">
-            {second.score} pts
-          </p>
+              <p className="text-indigo-600 font-bold">
+                {second.score} pts
+              </p>
+            </>
+          ) : (
+            <EmptySlot position="second" />
+          )}
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-6 text-center h-52 border-2 border-yellow-400 flex flex-col justify-center">
-          <span className="text-5xl mb-2">👑</span>
+          {first ? (
+            <>
+              <span className="text-5xl mb-2">👑</span>
 
-          <h2 className="font-bold text-lg text-slate-800">
-            {first.name}
-          </h2>
+              <h2 className="font-bold text-lg text-slate-800">
+                {first.name}
+              </h2>
 
-          <p className="text-indigo-600 font-bold text-xl">
-            {first.score} pts
-          </p>
+              <p className="text-indigo-600 font-bold text-xl">
+                {first.score} pts
+              </p>
+            </>
+          ) : (
+            <EmptySlot position="first" />
+          )}
         </div>
 
         <div className="bg-white rounded-2xl shadow-md p-4 text-center h-40 flex flex-col justify-center">
-          <span className="text-3xl mb-2">🥉</span>
+          {third ? (
+            <>
+              <span className="text-3xl mb-2">🥉</span>
 
-          <h2 className="font-semibold text-slate-800">
-            {third.name}
-          </h2>
+              <h2 className="font-semibold text-slate-800">
+                {third.name}
+              </h2>
 
-          <p className="text-indigo-600 font-bold">
-            {third.score} pts
-          </p>
+              <p className="text-indigo-600 font-bold">
+                {third.score} pts
+              </p>
+            </>
+          ) : (
+            <EmptySlot position="third" />
+          )}
         </div>
       </div>
     </>

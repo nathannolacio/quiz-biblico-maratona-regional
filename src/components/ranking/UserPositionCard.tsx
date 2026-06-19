@@ -13,7 +13,18 @@ export default function UserPositionCard({
     return null;
   }
 
-  const position = ranking.findIndex((u) => u.user_id === user.user_id) + 1;
+  const sortedRanking = [...ranking].sort((a, b) => {
+  if (b.score !== a.score) {
+    return b.score - a.score;
+  }
+
+  return (
+    new Date(a.created_at ?? 0).getTime() -
+    new Date(b.created_at ?? 0).getTime()
+  );
+});
+
+  const position = sortedRanking.findIndex((u) => u.user_id === user.user_id) + 1;
 
   return (
     <div className="bg-indigo-600 text-white rounded-2xl p-5 shadow-md mb-8">

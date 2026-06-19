@@ -1,3 +1,4 @@
+import { formatDateTime } from "@/helpers/formatDateTime";
 import { RankingUser } from "@/types/rankingUser";
 
 type RankingRowProps = {
@@ -28,11 +29,17 @@ export default function RankingRow({
           #{position}
         </span>
 
-        <span
-          className={`font-medium truncate ${nameColor}`}
-        >
-          {user.name}
-        </span>
+        <div className="min-w-0">
+          <p className={`font-medium truncate ${nameColor}`}>
+            {user.name}
+          </p>
+
+          {user.created_at && (
+            <p className="text-xs text-slate-500">
+              Concluído em {formatDateTime(user.created_at)}
+            </p>
+          )}
+        </div>
 
         {isCurrentUser && (
           <span className="text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-full shrink-0">

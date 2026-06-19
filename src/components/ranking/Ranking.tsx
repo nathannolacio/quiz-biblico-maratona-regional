@@ -59,9 +59,7 @@ export default function Ranking({
 
         const { students, leaders } = await getRanking(quizId);
 
-        console.log("students raw:", students);
         const rankingUsers = buildRanking(students);
-        console.log("ranking processed:", rankingUsers);
 
         const leaderUsers = buildRanking(leaders);
 
@@ -85,6 +83,15 @@ export default function Ranking({
         <RankingHeader quizId={quizId} />
 
         <RankingFilter />
+
+      <div className="mb-4 relative bg-indigo-50 border border-indigo-200 text-indigo-700 px-4 py-3 rounded-xl text-sm">
+        <div className="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500 rounded-l-xl" />
+        
+        <p className="pl-2">
+          ⚖️ Em caso de empate na pontuação, o critério de desempate é o tempo de conclusão.
+          Quem finalizar o quiz primeiro fica à frente no ranking.
+        </p>
+      </div>
 
         {loading ? (
           <RankingSkeleton />
