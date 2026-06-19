@@ -4,5 +4,8 @@ export async function getMe() {
   });
 
   if (!res.ok) return null;
-  return res.json();
+
+  const data = await res.json();
+
+  return data.user ?? null;
 }

@@ -1,67 +1,119 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import Link from "next/link";
 import Button from "../ui/Button";
 import { chapters } from "@/data/quiz";
-import Link from "next/link";
+import { getChaptersStatus } from "@/services/getChaptersStatus";
 
 export default function Chapters() {
-    return (    
-        <main className="w-full min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-100 via-white to-slate-100 p-6">
+  const [answered, setAnswered] = useState<Set<number>>(new Set());
+  const [loading, setLoading] = useState(true);
 
-            <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
+  useEffect(() => {
+    async function load() {
+      const data = await getChaptersStatus();
 
-                <h1 className="text-3xl font-bold text-center text-indigo-600 mb-6">
-                📖 Escolha o capítulo
-                </h1>
+      if (data) {
+        // 🔥 CORREÇÃO PRINCIPAL: garantir number
+        const answeredIds = data.map((item: QuizResult) =>
+          Number(item.quiz_id)
+        );
 
-                <p className="text-center text-gray-600 mb-8">
-                Selecione o capítulo bíblico que você deseja responder.
-                </p>
+        setAnswered(new Set(answeredIds));
+      }
 
-                <div className="grid gap-4">
+      setLoading(false);
+    }
 
-                    {chapters.map((chapter) => {
-                        if (!chapter.unlocked) {
-                            return (
-                                <div
-                                key={chapter.id}
-                                className="p-4 border rounded-lg opacity-40 cursor-not-allowed"
-                                >
-                                <h2 className="font-semibold">
-                                    {chapter.title}
-                                </h2>
+    load();
+  }, []);
 
-                                <p className="text-sm text-red-500">
-                                    Em breve
-                                </p>
-                                </div>
-                            );
-                        }
+  const isAnswered = (chapterId: number) => {
+    return answered.has(chapterId);
+  };
 
-                        return (
-                        <Link
-                            key={chapter.id}
-                            href={`/quiz/${chapter.id}`}
-                            className="p-4 border rounded-lg hover:bg-slate-50 transition"
-                        >
-                            <h2 className="font-semibold">
-                            {chapter.title}
-                            </h2>
+  return (
+    <main className="min-h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-slate-100 flex items-center justify-center p-6">
+      <div className="w-full max-w-3xl">
 
-                            <p className="text-sm text-slate-500">
-                            {chapter.questions.length} questões
-                            </p>
-                        </Link>
-                        );
-                    })}
+        {/* HEADER */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-indigo-600 tracking-tight">
+            📖 Capítulos
+          </h1>
+          <p className="text-slate-500 mt-2">
+            Acompanhe seu progresso e veja o que já foi respondido
+          </p>
+        </div>
 
-                </div>
+        {/* CONTAINER */}
+        <div className="bg-white rounded-2xl shadow-xl border border-slate-100 p-6">
 
-                <div className="mt-8 flex justify-center">
-                <Button variant="secondary" href="/">
-                    Voltar
-                </Button>
-                </div>
+          {loading ? (
+            <p className="text-center text-slate-500 py-10">
+              Carregando capítulos...
+            </p>
+          ) : (
+            <div className="space-y-3">
+              {chapters.map((chapter) => {
+                const locked = !chapter.unlocked;
+                const answeredState = isAnswered(chapter.id);
 
+                return (
+                  <Link
+                    key={chapter.id}
+                    href={locked ? "#" : `/quiz/${chapter.id}`}
+                    className={`
+                      flex items-center justify-between p-4 rounded-xl border transition
+                      ${
+                        locked
+                          ? "opacity-40 cursor-not-allowed bg-slate-50"
+                          : "hover:shadow-md hover:-translate-y-[1px] bg-white border-slate-200"
+                      }
+                    `}
+                  >
+                    {/* LEFT */}
+                    <div className="flex flex-col">
+                      <h2 className="font-semibold text-slate-800">
+                        {chapter.title}
+                      </h2>
+
+                      <p className="text-sm text-slate-500">
+                        {chapter.questions.length} questões
+                      </p>
+                    </div>
+
+                    {/* RIGHT BADGE */}
+                    <div>
+                      {locked ? (
+                        <span className="text-xs px-3 py-1 rounded-full bg-slate-200 text-slate-600">
+                          🔒 Em breve
+                        </span>
+                      ) : answeredState ? (
+                        <span className="text-xs px-3 py-1 rounded-full bg-green-100 text-green-700 font-medium">
+                          ✅ Respondido
+                        </span>
+                      ) : (
+                        <span className="text-xs px-3 py-1 rounded-full bg-slate-100 text-slate-600">
+                          ⬜ Não respondido
+                        </span>
+                      )}
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
-        </main>
-    );
+          )}
+
+          {/* FOOTER */}
+          <div className="mt-6 flex justify-center">
+            <Button variant="secondary" href="/">
+              Voltar
+            </Button>
+          </div>
+        </div>
+      </div>
+    </main>
+  );
 }
