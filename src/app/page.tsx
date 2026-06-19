@@ -1,36 +1,51 @@
 "use client";
 
 import Button from "@/components/ui/Button";
+import { usePWAInstall } from "@/hooks/usePWAInstall";
 import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();
 
-  function handleStart() {    
+  const { deferredPrompt, clearPrompt } = usePWAInstall();
+
+  async function handleInstall() {
+    if (!deferredPrompt) return;
+
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+
+    clearPrompt();
+  }
+
+  function handleStart() {
     router.push("/login");
   }
 
   return (
-    <main className="w-full h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 flex items-center justify-center p-6">
-
-      <div className="flex flex-col gap-10 max-w-3xl w-full bg-white rounded-2xl p-8 shadow-lg">
-
-        <h1 className="text-center font-bold text-indigo-600 text-4xl">
+    <main className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 flex items-center justify-center p-4 sm:p-6 md:p-10">
+      
+      <div className="flex flex-col gap-8 sm:gap-10 w-full max-w-3xl md:max-w-4xl bg-white rounded-2xl p-6 sm:p-10 shadow-lg">
+        
+        {/* Header */}
+        <h1 className="text-center font-bold text-indigo-600 text-3xl sm:text-4xl md:text-5xl leading-tight">
           📖 Quiz Bíblico - Efésios
         </h1>
 
-        <div className="space-y-3">
-          <h2 className="text-center font-semibold text-gray-700 text-xl">
+        {/* Description */}
+        <div className="space-y-2 sm:space-y-3">
+          <h2 className="text-center font-semibold text-gray-700 text-lg sm:text-xl md:text-2xl">
             Bem-vindo ao Quiz!
           </h2>
 
-          <p className="text-center text-gray-600 leading-relaxed">
+          <p className="text-center text-gray-600 text-sm sm:text-base md:text-lg leading-relaxed">
             Teste seus conhecimentos sobre a carta de Efésios.
           </p>
         </div>
 
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-
+        {/* Buttons */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+          
           <Button variant="primary" onClick={handleStart}>
             Iniciar Quiz
           </Button>
@@ -38,11 +53,23 @@ export default function Home() {
           <Button variant="secondary" href="/ranking">
             Ver Ranking
           </Button>
-
         </div>
 
-      </div>
+        {/* Install section */}
+        {deferredPrompt && (
+          <div className="mt-4 sm:mt-8 pt-6 border-t border-gray-100 text-center">
+            
+            <p className="text-xs sm:text-sm text-gray-500 mb-3">
+              📱 Instale o app para uma experiência melhor
+            </p>
 
+            <Button variant="secondary" onClick={handleInstall}>
+              Instalar app
+            </Button>
+          </div>
+        )}
+
+      </div>
     </main>
   );
 }
