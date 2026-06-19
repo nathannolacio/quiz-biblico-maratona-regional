@@ -6,6 +6,7 @@ import { ephesiansChapter4 } from "./chapters/ephesians-chapter-4";
 import { ephesiansChapter5 } from "./chapters/ephesians-chapter-5";
 import { ephesiansChapter6 } from "./chapters/ephesians-chapter-6";
 import { chapterRelease } from "@/config/chapterRelease";
+import { ephesiansAll } from "./chapters/ephesians-all";
 
 export type Quiz = {
   id: number;
@@ -51,4 +52,10 @@ export const chapters: Quiz[] = [
         questions: ephesiansChapter6,
         unlocked: chapterRelease[6]
     },
+    {
+        id: 7,
+        title: "Geral | Todos os capítulos",
+        questions: ephesiansAll,
+        unlocked: chapterRelease[7]
+    }
 ];
