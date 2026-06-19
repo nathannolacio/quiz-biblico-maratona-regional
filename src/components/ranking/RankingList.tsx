@@ -19,10 +19,11 @@ export default function RankingList({
       </div>
 
       <div className="divide-y divide-slate-100">
-        {ranking.map((user) => (
+        {ranking.map((user, index) => (
           <RankingRow
-            key={user.position}
+            key={user.user_id}
             user={user}
+            position={index + 1}
             isCurrentUser={user.user_id === currentUserId}
           />
         ))}

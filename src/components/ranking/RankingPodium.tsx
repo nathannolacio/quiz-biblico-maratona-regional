@@ -19,38 +19,40 @@ export default function RankingPodium({
     <>
       {/* Mobile */}
       <div className="flex flex-col gap-4 mb-8 md:hidden">
-        {ranking.slice(0, 3).map((user) => (
-          <div
-            key={user.position}
-            className={`bg-white rounded-2xl shadow-md p-4 flex items-center justify-between ${
-              user.position === 1
-                ? "border-2 border-yellow-400"
-                : ""
-            }`}
-          >
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">
-                {user.position === 1 && "🥇"}
-                {user.position === 2 && "🥈"}
-                {user.position === 3 && "🥉"}
-              </span>
+        {ranking.slice(0, 3).map((user, index) => {
+          const position = index + 1;
 
-              <div>
-                <p className="font-semibold text-slate-800">
-                  {user.name}
-                </p>
+          return (
+            <div
+              key={user.user_id}
+              className={`bg-white rounded-2xl shadow-md p-4 flex items-center justify-between ${
+                position === 1 ? "border-2 border-yellow-400" : ""
+              }`}
+            >
+              <div className="flex items-center gap-3">
+                <span className="text-2xl">
+                  {position === 1 && "🥇"}
+                  {position === 2 && "🥈"}
+                  {position === 3 && "🥉"}
+                </span>
 
-                <p className="text-sm text-slate-500">
-                  #{user.position}
-                </p>
+                <div>
+                  <p className="font-semibold text-slate-800">
+                    {user.name}
+                  </p>
+
+                  <p className="text-sm text-slate-500">
+                    #{position}
+                  </p>
+                </div>
               </div>
-            </div>
 
-            <span className="font-bold text-indigo-600">
-              {user.score} pts
-            </span>
-          </div>
-        ))}
+              <span className="font-bold text-indigo-600">
+                {user.score} pts
+              </span>
+            </div>
+          );
+        })}
       </div>
 
       {/* Desktop */}

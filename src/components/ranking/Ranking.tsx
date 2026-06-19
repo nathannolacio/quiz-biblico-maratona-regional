@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
 import Button from "../ui/Button";
 import RankingHeader from "./RankingHeader";
 import RankingFilter from "./RankingFilter";
@@ -9,14 +8,20 @@ import RankingPodium from "./RankingPodium";
 import RankingList from "./RankingList";
 import { useEffect, useState } from "react";
 import { RankingUser } from "@/types/rankingUser";
-import { getGeneralRanking } from "@/services/ranking.client";
-import { GeneralRankingResponse } from "@/types/generalRankingResponse";
+import { getRanking } from "@/services/ranking.client";
 import RankingSkeleton from "./RankingSkeleton";
 import { getMe } from "@/services/user.client";
+import { useRouter } from "next/navigation";
+import { buildRanking } from "@/helpers/buildRanking";
 
-export default function Ranking() {
+type RankingProps = {
+  quizId?: string;
+};
+
+export default function Ranking({
+  quizId,
+}: RankingProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   const [ranking, setRanking] = useState<RankingUser[]>([]);
   const [leaders, setLeaders] = useState<RankingUser[]>([]);
@@ -25,10 +30,6 @@ export default function Ranking() {
   const [error, setError] = useState<string | null>(null);
 
   const [currentUserId, setCurrentUserId] = useState<string | null>(null);
-
-  const chapter = searchParams.get("chapter") ?? undefined;
-
-  const isChapterView = !!chapter;
 
   const currentUserData: RankingUser | null =
     currentUserId
@@ -54,25 +55,15 @@ export default function Ranking() {
   useEffect(() => {
     async function loadRanking() {
       try {
-        const { students, leaders } = await getGeneralRanking();
+        setLoading(true);
 
-        const rankingUsers: RankingUser[] = students.map(
-          (user: GeneralRankingResponse, index: number) => ({
-            user_id: user.user_id,
-            position: index + 1,
-            name: user.name,
-            score: user.total_score,
-          })
-        );
+        const { students, leaders } = await getRanking(quizId);
 
-        const leaderUsers: RankingUser[] = leaders.map(
-          (user: GeneralRankingResponse) => ({
-            user_id: user.user_id,
-            position: 0,
-            name: user.name,
-            score: user.total_score,
-          })
-        );
+        console.log("students raw:", students);
+        const rankingUsers = buildRanking(students);
+        console.log("ranking processed:", rankingUsers);
+
+        const leaderUsers = buildRanking(leaders);
 
         setRanking(rankingUsers);
         setLeaders(leaderUsers);
@@ -85,22 +76,15 @@ export default function Ranking() {
     }
 
     loadRanking();
-  }, []);
+  }, [quizId]);
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 p-4 sm:p-6">
       <div className="max-w-4xl mx-auto">
 
-        <RankingHeader chapter={chapter} />
+        <RankingHeader quizId={quizId} />
 
-        <RankingFilter chapter={chapter} />
-
-        {isChapterView && (
-          <div className="mb-4 bg-blue-50 border border-blue-200 text-blue-700 px-4 py-3 rounded-xl">
-            📊 O ranking por capítulo ainda não está disponível.
-            Exibindo o ranking geral como padrão.
-          </div>
-        )}
+        <RankingFilter />
 
         {loading ? (
           <RankingSkeleton />
@@ -115,9 +99,15 @@ export default function Ranking() {
           </div>
         ) : (
           <>
-            <UserPositionCard user={currentUserData} />
+            <UserPositionCard 
+              user={currentUserData}
+              ranking={ranking}   
+            />
 
-            <RankingPodium ranking={ranking} />
+            <RankingPodium 
+              ranking={ranking} 
+              
+              />
 
             <RankingList
               ranking={ranking}

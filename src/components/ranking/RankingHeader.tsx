@@ -1,19 +1,19 @@
 type Props = {
-  chapter?: string;
+  quizId?: string;
 };
 
 export default function RankingHeader({
-  chapter,
+  quizId,
 }: Props) {
-  const isGeneral = !chapter;
+  const isGeneral = !quizId;
 
   const title = isGeneral
     ? "🏆 Ranking Geral"
-    : `📖 Capítulo ${chapter}`;
+    : `📖 Capítulo ${quizId}`;
 
   const description = isGeneral
     ? "Soma da pontuação de todos os quizzes realizados."
-    : `Pontuação referente apenas ao Quiz do Capítulo ${chapter}.`;
+    : `Pontuação referente apenas ao Quiz do Capítulo ${quizId}.`;
 
   return (
     <div className="text-center mb-8">

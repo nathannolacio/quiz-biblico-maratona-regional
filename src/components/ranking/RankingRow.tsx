@@ -2,11 +2,13 @@ import { RankingUser } from "@/types/rankingUser";
 
 type RankingRowProps = {
   user: RankingUser;
+  position: number;
   isCurrentUser: boolean;
 };
 
 export default function RankingRow({
   user,
+  position,
   isCurrentUser,
 }: RankingRowProps) {
   const nameColor = isCurrentUser
@@ -23,7 +25,7 @@ export default function RankingRow({
     >
       <div className="flex items-center gap-3 sm:gap-4 min-w-0">
         <span className="font-bold text-slate-500 w-8 shrink-0">
-          #{user.position}
+          #{position}
         </span>
 
         <span
