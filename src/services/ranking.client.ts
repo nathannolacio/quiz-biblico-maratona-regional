@@ -1,17 +1,9 @@
-import { RankingUser } from "@/types/rankingUser";
-
-type RawUser = {
+type RawRankingUser = {
   user_id: string;
   name: string;
+  role?: string;
   total_score: number;
-};
-
-type RawQuizUser = {
-  user_id: string;
-  name: string;
-  role: string;
-  total_score: number;
-  created_at?: string,
+  created_at: string;
 };
 
 export async function getGeneralRanking() {
@@ -26,15 +18,17 @@ export async function getGeneralRanking() {
   const data = await response.json();
 
   return {
-    students: data.students.map((u: RawUser) => ({
+    students: data.students.map((u: RawRankingUser) => ({
       user_id: u.user_id,
       name: u.name,
       score: u.total_score,
+      created_at: u.created_at,
     })),
-    leaders: data.leaders.map((u: RawUser) => ({
+    leaders: data.leaders.map((u: RawRankingUser) => ({
       user_id: u.user_id,
       name: u.name,
       score: u.total_score,
+      created_at: u.created_at,
     })),
   }
 }
@@ -47,10 +41,10 @@ export async function getRankingByQuiz(quizId: string) {
     throw new Error(error.error || "Erro ao buscar ranking por quiz");
   }
 
-  const data: RawQuizUser[] = await response.json();
+  const data: RawRankingUser[] = await response.json();
 
-  const students = data.filter((u: RawQuizUser) => u.role === "student");
-  const leaders = data.filter((u: RawQuizUser) => u.role === "leader");
+  const students = data.filter((u: RawRankingUser) => u.role === "student");
+  const leaders = data.filter((u: RawRankingUser) => u.role === "leader");
 
   return {
     students: students.map((u) => ({
