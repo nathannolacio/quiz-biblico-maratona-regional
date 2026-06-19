@@ -22,13 +22,11 @@ export async function getGeneralRanking() {
       user_id: u.user_id,
       name: u.name,
       score: u.total_score,
-      created_at: u.created_at,
     })),
     leaders: data.leaders.map((u: RawRankingUser) => ({
       user_id: u.user_id,
       name: u.name,
       score: u.total_score,
-      created_at: u.created_at,
     })),
   }
 }
