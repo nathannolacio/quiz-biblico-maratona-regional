@@ -23,7 +23,7 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 px-6 flex items-center justify-center md:pb-0 pb-20">
+    <main className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-white to-indigo-50 px-6 flex items-center justify-center md:pb-0 pb-20">
       
       <div className="flex flex-col gap-8 w-full max-w-md md:max-w-2xl mx-auto">
         

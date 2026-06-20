@@ -77,7 +77,7 @@ export default function Ranking({
   }, [quizId]);
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 p-4 sm:p-6 pb-20">
+    <main className="min-h-screen bg-indigo-50/45 p-4 sm:p-6 pb-20">
       <div className="max-w-4xl mx-auto">
 
         <RankingHeader quizId={quizId} />

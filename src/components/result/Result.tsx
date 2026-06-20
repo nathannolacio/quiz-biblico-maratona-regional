@@ -53,7 +53,7 @@ useEffect(() => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-50 to-slate-100">
+      <div className="min-h-screen flex items-center justify-center bg-indigo-50/45">
         <p className="text-gray-600 animate-pulse">
           Carregando resultado...
         </p>
