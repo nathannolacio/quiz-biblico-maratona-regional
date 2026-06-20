@@ -18,43 +18,43 @@ export type Quiz = {
 export const chapters: Quiz[] = [
     {
         id: 1,
-        title: "Capítulo 1",
+        title: "Quiz 1 - Cap. 1",
         questions: ephesiansChapter1,
         unlocked: chapterRelease[1],
     },
     {
         id: 2,
-        title: "Capítulo 2",
+        title: "Quiz 2 - Cap. 2",
         questions: ephesiansChapter2,
         unlocked: chapterRelease[2]
     },
     {
         id: 3,
-        title: "Capítulo 3",
+        title: "Quiz 3 - Cap. 3",
         questions: ephesiansChapter3,
         unlocked: chapterRelease[3]
     },
     {
         id: 4,
-        title: "Capítulo 4",
+        title: "Quiz 4 - Cap. 4",
         questions: ephesiansChapter4,
         unlocked: chapterRelease[4]
     },
     {
         id: 5,
-        title: "Capítulo 5",
+        title: "Quiz 5 - Cap. 5",
         questions: ephesiansChapter5,
         unlocked: chapterRelease[5]
     },
     {
         id: 6,
-        title: "Capítulo 6",
+        title: "Quiz 6 - Cap. 6",
         questions: ephesiansChapter6,
         unlocked: chapterRelease[6]
     },
     {
         id: 7,
-        title: "Geral | Todos os capítulos",
+        title: "Quiz Final - Todos os capítulos",
         questions: ephesiansAll,
         unlocked: chapterRelease[7]
     }

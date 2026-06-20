@@ -98,7 +98,7 @@ export default function Chapters() {
                     {/* LEFT */}
                     <div className="flex flex-col min-w-0">
                       <h2 className="font-semibold text-slate-800 break-words">
-                        {`Quiz - ${chapter.title}`}
+                        {`${chapter.title}`}
                       </h2>
 
                       <p className="text-sm text-slate-500">
