@@ -1,6 +1,5 @@
 "use client";
 
-import Button from "../ui/Button";
 import { chapters } from "@/data/quiz";
 import ChaptersProgress from "./ChaptersProgress";
 import ChapterCard from "./ChapterCard";

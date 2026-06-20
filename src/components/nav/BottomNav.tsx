@@ -50,6 +50,18 @@ export default function BottomNav() {
           <span>Ranking</span>
         </Link>
 
+        <Link
+          href="/revisao"
+          className={`flex flex-col items-center text-sm transition-colors ${
+            isActive("/revisao")
+                ? "text-indigo-600"
+                : "text-gray-500"
+            }`}
+        >
+            <span>📝</span>
+            <span>Revisão</span>
+        </Link>
+
       </div>
     </nav>
   );
