@@ -23,9 +23,9 @@ export default function Home() {
   }
 
   return (
-    <main className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 flex items-center justify-center p-4 sm:p-6 md:p-10">
+    <main className="w-full min-h-screen bg-gradient-to-br from-indigo-100 via-white to-slate-100 px-6 flex items-center justify-center md:pb-0 pb-20">
       
-      <div className="flex flex-col gap-8 sm:gap-10 w-full max-w-3xl md:max-w-4xl bg-white rounded-2xl p-6 sm:p-10 shadow-lg">
+      <div className="flex flex-col gap-8 w-full max-w-md md:max-w-2xl mx-auto">
         
         {/* Header */}
         <h1 className="text-center font-bold text-indigo-600 text-3xl sm:text-4xl md:text-5xl leading-tight">
@@ -57,7 +57,7 @@ export default function Home() {
 
         {/* Install section */}
         {deferredPrompt && (
-          <div className="mt-4 sm:mt-8 pt-6 border-t border-gray-100 text-center">
+          <div className="pt-6 border-t border-gray-200 text-center">
             
             <p className="text-xs sm:text-sm text-gray-500 mb-3">
               📱 Instale o app para uma experiência melhor

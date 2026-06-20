@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { ToastProvider } from "@/components/ui/Toast";
 import { Analytics } from "@vercel/analytics/next";
+import BottomNav from "@/components/nav/BottomNav";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,8 +32,12 @@ export default async function RootLayout({
     >
       <body className="min-h-full flex flex-col">
         <ToastProvider>
-          {children}
+          <main>
+            {children}
+          </main>
         </ToastProvider>
+
+        <BottomNav />
 
         <Analytics />
       </body>

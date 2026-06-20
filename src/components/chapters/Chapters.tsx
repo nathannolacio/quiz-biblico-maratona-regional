@@ -46,7 +46,7 @@ export default function Chapters() {
   const total = unlockedChapters.length;
 
   return (
-    <main className="min-h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-slate-100 flex items-center justify-center p-4 sm:p-6">
+    <main className="min-h-screen w-full bg-gradient-to-br from-indigo-50 via-white to-slate-100 flex items-center justify-center p-4 pb-20 sm:p-6">
       <div className="w-full max-w-3xl">
 
         {/* HEADER */}
