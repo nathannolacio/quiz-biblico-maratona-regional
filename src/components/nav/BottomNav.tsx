@@ -23,7 +23,7 @@ export default function BottomNav() {
             }`}
         >
           <span>🏠</span>
-          <span>Home</span>
+          <span>Início</span>
         </Link>
 
         <Link
@@ -35,7 +35,7 @@ export default function BottomNav() {
             }`}
         >
           <span>📚</span>
-          <span>Chapters</span>
+          <span>Capítulos</span>
         </Link>
 
         <Link
